@@ -4,10 +4,10 @@ services:
    container_name: minglex-mysql
    image: mysql/mysql-server:5.7
    environment:
-    MYSQL_DATABASE: MingleX
-    MYSQL_ROOT_PASSWORD: ksvminglex
+    MYSQL_DATABASE: tododb
+    MYSQL_ROOT_PASSWORD: 1
    ports:
-   - "3306:3306"
+   - 3306:3306
    volumes:
      - ./initDB:/docker-entrypoint-initdb.d
    restart: always
