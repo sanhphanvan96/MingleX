@@ -6,6 +6,8 @@ services:
    environment:
     MYSQL_DATABASE: MingleX
     MYSQL_ROOT_PASSWORD: ksvminglex
+    MYSQL_USER: root
+    MYSQL_ROOT_HOST: '%'
    ports:
    - "3306:3306"
    volumes:
