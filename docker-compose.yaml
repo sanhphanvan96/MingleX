@@ -16,7 +16,7 @@ services:
   
   app:
     container_name: minglex-app
-    build: ./app
+    image: nguyentrivien/minglex-app:1.0
     working_dir: /app
     volumes:
       - ./app:/app
