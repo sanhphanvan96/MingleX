@@ -1,0 +1,29 @@
+version: '3'
+services:
+  mysql:
+   container_name: minglex-mysql
+   image: mysql/mysql-server:5.7
+   environment:
+    MYSQL_DATABASE: minglexdb
+    MYSQL_ROOT_PASSWORD: 1
+    MYSQL_USER: root
+    MYSQL_ROOT_HOST: '%'
+   ports:
+   - 3306:3306
+   volumes:
+     - ./initDB:/docker-entrypoint-initdb.d
+   restart: always
+  
+  app:
+    container_name: minglex-app
+    build: ./app
+    working_dir: /app
+    volumes:
+      - ./app:/app
+      - ~/.m2:/root/.m2
+    ports:
+      - 6969:8080
+    command: mvn clean spring-boot:run
+    depends_on:
+      - mysql
+    restart: always
