@@ -9,9 +9,11 @@ public class HelloController {
 
 	@RequestMapping("/")
 	public String index(Model model) {
+		model.addAttribute("msg", "Hello World");
+		
 		return "index";
 	}
-	
+
 	@RequestMapping("/introduction")
 	public String intro(Model model) {
 		return "intro";
