@@ -1,12 +1,22 @@
 package com.mgmsp.MingleX;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class MingleXApplication {
+public class MingleXApplication extends SpringBootServletInitializer {
+	
+	private static final Logger log = LoggerFactory.getLogger(MingleXApplication.class);
+	
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(MingleXApplication.class);
+	}
 	
 	public static void main(String[] args) {
 		SpringApplication.run(MingleXApplication.class, args);
