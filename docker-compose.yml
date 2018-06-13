@@ -17,7 +17,7 @@ services:
   app:
     container_name: minglex-app
     #Todo: change this line later (auto builded image from docker-hub)
-    image: sanhphanvan/ver1-ksv
+    image: sanhphanvan/minglex
     working_dir: /app
     ports:
       - 6969:8080
