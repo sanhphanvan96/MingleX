@@ -16,14 +16,12 @@ services:
   
   app:
     container_name: minglex-app
-    build: ./app
+    #Todo: change this line later (auto builded image from docker-hub)
+    image: sanhphanvan/ver1-ksv
     working_dir: /app
-    volumes:
-      - ./app:/app
-      - ~/.m2:/root/.m2
     ports:
       - 6969:8080
-    command: mvn clean spring-boot:run
+    command: bash -c "ls ./target && cp ./target/*.jar ./target/app.jar && java -jar ./target/app.jar"
     depends_on:
       - mysql
     restart: always
