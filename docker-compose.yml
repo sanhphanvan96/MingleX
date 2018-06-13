@@ -21,7 +21,7 @@ services:
     working_dir: /app
     ports:
       - 6969:8080
-    command: bash -c "ls ./target && cp ./target/*.jar ./target/app.jar && java -jar ./target/app.jar"
+    command: bash -c "ls ./target && cp ./target/minglex*.jar ./target/app.jar && java -jar ./target/app.jar"
     depends_on:
       - mysql
     restart: always
