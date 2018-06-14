@@ -21,7 +21,7 @@
 				</div>
 				<div class="intro-heading text-uppercase">Let's find the one for you!</div>
 				<div>
-					<a class="btn btn-primary btn-xl text-uppercase" href="#login">Login</a>
+					<a class="btn btn-primary btn-xl text-uppercase" href="/login">Login</a>
 				</div>
 				</div>
 			</div>
