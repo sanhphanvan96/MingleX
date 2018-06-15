@@ -17,7 +17,9 @@
 			<div class="container">
 				<div class="intro-text">
 				<div>
-					<img class="logo" src="images/logo-minglex-bg.png">
+					<a href="/">
+						<img class="logo" src="images/logo-minglex-bg.png">
+					</a>
 				</div>
 				<div class="intro-heading text-uppercase">Let's find the one for you!</div>
 				<div>
