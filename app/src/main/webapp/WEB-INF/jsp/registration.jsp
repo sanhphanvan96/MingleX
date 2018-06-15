@@ -16,7 +16,8 @@
 						<h3 class="panel-title">Register</h3>
 					</div>
 					<div class="panel-body">
-						<form:form action="/registration" method="POST" modelAttribute="user">
+						<form:form action="/registration" method="POST"
+							modelAttribute="user">
 							<div class="form-group">
 								<label>Username</label>
 								<form:input path="username" cssClass="form-control" />
@@ -29,10 +30,13 @@
 							</div>
 							<div class="form-group">
 								<label>Gender</label><br>
-								<form:radiobutton path="gender" value="male" label="Male" checked="checked"/><br>
-  								<form:radiobutton path="gender" value="female" label="female"/> <br>
-  								<form:radiobutton path="gender" value="other" label="other"/>   
-  								<form:errors path="gender" cssClass="error" />
+								<form:radiobutton path="gender" value="male" label="Male"
+									checked="checked" />
+								<br>
+								<form:radiobutton path="gender" value="female" label="female" />
+								<br>
+								<form:radiobutton path="gender" value="other" label="other" />
+								<form:errors path="gender" cssClass="error" />
 							</div>
 							<div class="form-group form-acions text-right">
 								<input type="reset" class="btn btn-default" value="Reset">

@@ -36,13 +36,11 @@ public class UserServiceImpl implements UserService {
 			return "Password is required";
 		}
 //		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		System.out.println(user.getUsername() + "   " + user.getPassword());
 		User userdb = userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
 		System.out.println(user.toString());
 		if (userdb != null) {
 			return "SUCCESS";
 		}
-		BCrypt bCrypt = new BCrypt();
 		return "FAILED";
 	}
 
