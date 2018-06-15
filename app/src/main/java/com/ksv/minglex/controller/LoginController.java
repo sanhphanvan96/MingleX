@@ -19,22 +19,22 @@ import com.ksv.minglex.service.UserService;
 
 @Controller
 public class LoginController {
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@RequestMapping("/")
-	public String index(Model model) {		
+	public String index(Model model) {
 		return "index";
 	}
-	
+
 	@RequestMapping(value="/login", method = RequestMethod.GET)
 	public ModelAndView loginView() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("login");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value="/login", method = RequestMethod.POST)
 	public ModelAndView login(Model model, HttpServletRequest httpServletRequest) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -46,14 +46,13 @@ public class LoginController {
 		if (resMsg.equals("SUCCESS")) {
 			modelAndView.setViewName("index");
 		} else {
-			// has error
-			System.out.println(resMsg);
+			// Has error
 			modelAndView.addObject("errorMessage", resMsg);
 			modelAndView.setViewName("login");
 		}
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
 	public ModelAndView registration() {
 		ModelAndView modelAndView = new ModelAndView();
@@ -62,18 +61,15 @@ public class LoginController {
 		modelAndView.setViewName("registration");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value="/registration", method = RequestMethod.POST)
 	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
-		System.out.println("register ...................");
 		ModelAndView modelAndView = new ModelAndView();
 		User userExists = userService.findUserByUsername(user.getUsername());
 		if (userExists != null) {
-			System.out.println("There is already a user registered with the username provide");
 			bindingResult.rejectValue("username", "error.user", "There is already a user registered with the username provide");
 		}
 		if (bindingResult.hasErrors()) {
-			System.out.println("Has error: " + bindingResult.getFieldError());
 			modelAndView.setViewName("registration");
 		} else {
 			userService.saveUser(user);
@@ -83,7 +79,7 @@ public class LoginController {
 		}
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value="/admin/home", method = RequestMethod.GET)
 	public ModelAndView home() {
 		ModelAndView modelAndView = new ModelAndView();
@@ -94,5 +90,5 @@ public class LoginController {
 		modelAndView.setViewName("admin/home");
 		return modelAndView;
 	}
-	
+
 }

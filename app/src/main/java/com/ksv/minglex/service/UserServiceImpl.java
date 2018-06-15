@@ -3,6 +3,7 @@ package com.ksv.minglex.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ksv.minglex.model.User;
@@ -14,7 +15,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public User findUserByUsername(String username) {
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void saveUser(User user) {
-//		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
 	}
 
@@ -35,10 +36,8 @@ public class UserServiceImpl implements UserService {
 		if (user.getPassword() == null || user.getPassword().length() == 0) {
 			return "Password is required";
 		}
-//		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		User userdb = userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
-		System.out.println(user.toString());
-		if (userdb != null) {
+		User userdb = userRepository.findByUsername(user.getUsername());
+		if (passwordEncoder.matches(user.getPassword(), userdb.getPassword())) {
 			return "SUCCESS";
 		}
 		return "FAILED";
