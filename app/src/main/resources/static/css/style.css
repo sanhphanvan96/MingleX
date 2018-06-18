@@ -51,6 +51,7 @@ section h3.section-subheading {
 @media (min-width: 768px) {
   section {
     padding: 50px 0;
+    padding-top: 0px;
     margin-bottom: 50px;
   }
 }
@@ -102,7 +103,7 @@ header.masthead {
   text-align: center;
   background: white;
   color: aliceblue;
-  background-image: url("../images/bg-dating.jpg");
+  background-image: url("../images/test/dating1.jpg");
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center center;

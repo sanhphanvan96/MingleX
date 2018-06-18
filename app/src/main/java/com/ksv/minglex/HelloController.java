@@ -18,4 +18,10 @@ public class HelloController {
 	public String login(Model model) {		
 		return "login";
 	}
+
+	@RequestMapping("/profile")
+	public String profile(Model model) {
+		model.addAttribute("user", "Khanh");
+		return "profile";
+	}
 }

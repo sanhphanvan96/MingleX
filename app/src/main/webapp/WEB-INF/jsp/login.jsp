@@ -9,17 +9,18 @@
 	<!-- Custom styles -->
 	<link href="css/style.css" rel="stylesheet">
     <link href="css/style_login.css" rel="stylesheet">
-    <link href="css/util.css" rel="stylesheet">
+	<link href="css/util.css" rel="stylesheet">
+	
 </head>
 
 <body>
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-t-50 p-b-90">
-				<form class="login100-form validate-form flex-sb flex-w">
+				<form action="/profile" method="POST" class="login100-form validate-form flex-sb flex-w">
 					<span class="login100-form-title p-b-51">
 						<a href="/">
-							<img class="logo" src="images/logo-minglex-bg.png" style="height: 120px; width: auto;">
+							<img class="logo" src="images/logo-minglex-bg.png" style="height: 135px; width: auto;">
 						</a>
 					</span>
 

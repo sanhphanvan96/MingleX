@@ -133,14 +133,7 @@
   .limiter {
     width: 100%;
     margin: 0 auto;
-    background-image: url("../images/bg-dating.jpg");
-    background-repeat: no-repeat;
-    background-attachment: scroll;
-    background-position: center center;
-    -webkit-background-size: contain;
-    -moz-background-size: contain;
-    -o-background-size: contain;
-    background-size: contain;
+    
   }
   
   .container-login100 {
@@ -154,17 +147,21 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    padding: 15px;
     
+    background-image: url("../images/test/dating1.jpg");
+    background-repeat: no-repeat;
+    background-attachment: scroll;
     background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    -o-background-size: contain;
+    background-size: contain;
   }
   
   
   .wrap-login100 {
     width: 390px;
-    background: rgba(219, 112, 147,0.1);
+    background: rgba(144, 177, 220,0.1);
     border-radius: 10px;
     position: relative;
   }
