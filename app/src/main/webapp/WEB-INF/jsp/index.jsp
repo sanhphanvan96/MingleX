@@ -8,6 +8,6 @@
 	<link href="/css/style.css" rel="stylesheet" />
 </head>
 <body>
-	<h1>Hello World! Hi there</h1>
+	<h1>Hello World!</h1>
 </body>
 </html>
