@@ -28,7 +28,7 @@
                 </ul>
                 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </ul>
 
             </div>
@@ -46,10 +46,10 @@
         <div class="container-fluid" style="margin-left:20%; padding: 25px 50px;">
 			<h5>Username</h5>
 			<p class="profile-info" id="username">${curUser.username}</p>
-            <h5>Age</h5>
-            <p class="profile-info" id="age">${curUser.age}</p>
+            <%-- <h5>Age</h5>
+            <p class="profile-info" id="age">${curUser.age}</p> --%>
             <h5>Gender</h5>
-            <p class="profile-info" id="Gender">${curUser.gender}/p>
+            <p class="profile-info" id="Gender">${curUser.gender}</p>
             </div>
         <footer>Copyright &copy; KSV - mgm security partners' interns</footer>
     </div>

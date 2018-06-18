@@ -29,22 +29,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String authenticateUser(User user) {
-		if (user.getUsername() == null || user.getUsername().length() == 0) {
-			return "Username is required";
-		}
-		if (user.getPassword() == null || user.getPassword().length() == 0) {
-			return "Password is required";
-		}
+	public User authenticateUser(User user) {
 		User userdb = userRepository.findByUsernameAndPasswordCustom(user.getUsername(), user.getPassword());
-		if (userdb != null) {
-			return "SUCCESS";
-		}
-		//SaltSHA & BCrypt
+//		SaltSHA & BCrypt
 //		if (passwordEncoder.matches(user.getPassword(), userdb.getPassword())) {
-//			return "SUCCESS";
+//			return userdb;
+//		} else {
+//			return null;
 //		}
-		return "FAILED";
+		return userdb;
 	}
 
 }

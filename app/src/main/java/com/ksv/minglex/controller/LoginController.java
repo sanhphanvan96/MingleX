@@ -42,12 +42,28 @@ public class LoginController {
 		curUser.setUsername(httpServletRequest.getParameter("username"));
 		curUser.setPassword(httpServletRequest.getParameter("password"));
 		curUser.setGender(httpServletRequest.getParameter("gender"));
-		String resMsg = userService.authenticateUser(curUser);
-		if (resMsg.equals("SUCCESS")) {
-			modelAndView.setViewName("index");
+		
+		//Validation
+		if (curUser.getUsername() == null || curUser.getUsername().length() == 0) {
+			modelAndView.addObject("errorMessage", "Username is required");
+			modelAndView.setViewName("login");
+			return modelAndView;
+		}
+		if (curUser.getPassword() == null || curUser.getPassword().length() == 0) {
+			modelAndView.addObject("errorMessage", "Password is required");
+			modelAndView.setViewName("login");
+			return modelAndView;
+		}
+		
+		//Authentication
+		User resUser = userService.authenticateUser(curUser);
+		if (resUser != null) {
+			resUser.setPassword(null);
+			httpServletRequest.getSession().setAttribute("user", resUser);
+			return new ModelAndView("redirect:/profile");
 		} else {
 			// Has error
-			modelAndView.addObject("errorMessage", resMsg);
+			modelAndView.addObject("errorMessage", "FAILED");
 			modelAndView.setViewName("login");
 		}
 		return modelAndView;
@@ -80,15 +96,25 @@ public class LoginController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value="/admin/home", method = RequestMethod.GET)
-	public ModelAndView home() {
+	@RequestMapping(value="/profile", method = RequestMethod.GET)
+	public ModelAndView profileView(Model model, HttpServletRequest httpServletRequest) {
 		ModelAndView modelAndView = new ModelAndView();
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByUsername(auth.getName());
-		modelAndView.addObject("usernName", "Welcome " + user.getUsername());
-		modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-		modelAndView.setViewName("admin/home");
+		
+		User user = (User) httpServletRequest.getSession().getAttribute("user");
+		if (user == null) {
+			return new ModelAndView("redirect:/login");
+		}
+		modelAndView.addObject("curUser", user);
+		modelAndView.setViewName("profile");
 		return modelAndView;
+	}
+	
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public ModelAndView logout(Model model, HttpServletRequest httpServletRequest) {
+		ModelAndView modelAndView = new ModelAndView();
+		
+		httpServletRequest.getSession().invalidate();
+		return new ModelAndView("redirect:/login");
 	}
 
 }
