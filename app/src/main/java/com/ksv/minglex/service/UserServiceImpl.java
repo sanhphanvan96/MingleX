@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User findUserByUsername(String username) {
-		return userRepository.findByUsername(username);
+		return userRepository.findByUsernameCustom(username);
 	}
 
 	@Override
@@ -36,10 +36,14 @@ public class UserServiceImpl implements UserService {
 		if (user.getPassword() == null || user.getPassword().length() == 0) {
 			return "Password is required";
 		}
-		User userdb = userRepository.findByUsername(user.getUsername());
-		if (passwordEncoder.matches(user.getPassword(), userdb.getPassword())) {
+		User userdb = userRepository.findByUsernameAndPasswordCustom(user.getUsername(), user.getPassword());
+		if (userdb != null) {
 			return "SUCCESS";
 		}
+		//SaltSHA & BCrypt
+//		if (passwordEncoder.matches(user.getPassword(), userdb.getPassword())) {
+//			return "SUCCESS";
+//		}
 		return "FAILED";
 	}
 

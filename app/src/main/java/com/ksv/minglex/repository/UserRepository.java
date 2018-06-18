@@ -6,7 +6,8 @@ import org.springframework.stereotype.Repository;
 import com.ksv.minglex.model.User;
 
 @Repository("userRepository")
-public interface UserRepository extends JpaRepository<User, Long>{
+public interface UserRepository extends JpaRepository<User, Long>, UserRepositoryCustom {
+	
 	User findByUsername(String username);
 	User findByUsernameAndPassword(String username, String password);
 }

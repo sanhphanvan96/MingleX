@@ -2,16 +2,14 @@ package com.ksv.minglex.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.annotation.Transient;
+
 
 @Entity
 @Table(name = "user")
