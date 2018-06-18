@@ -9,10 +9,12 @@
 		<insert tableName="user">
 			<column name="username" value="spiderman" />
 			<column name="password" value="batmansocute" />
+			<column name="gender" value="male" />
 		</insert>
 		<insert tableName="user">
 			<column name="username" value="ironman" />
 			<column name="password" value="tonystark" />
+			<column name="gender" value="other" />
 		</insert>
 	</changeSet>
 
