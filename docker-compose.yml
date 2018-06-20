@@ -13,15 +13,15 @@ services:
    volumes:
      - ./initDB:/docker-entrypoint-initdb.d
    restart: always
-  
+
   app:
     container_name: minglex-app
     #Todo: change this line later (auto builded image from docker-hub)
-    image: sanhphanvan/minglex
+    image: sanhphanvan/minglex:sync
     working_dir: /app
     ports:
       - 6969:8080
-    command: bash -c "ls ./target && cp ./target/minglex*.jar ./target/app.jar && java -jar -Dspring.profiles.active=docker ./target/app.jar"
+    command: bash -c "python /tmp/wait-for-mysql.py && echo 'minglex-mysql works fine' && ls ./target && cp ./target/minglex*.jar ./target/app.jar && java -jar -Dspring.profiles.active=docker ./target/app.jar"
     depends_on:
       - mysql
     restart: always
