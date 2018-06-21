@@ -13,7 +13,6 @@ services:
    volumes:
      - ./initDB:/docker-entrypoint-initdb.d
    restart: always
-
   app:
     container_name: minglex-app
     #Todo: change this line later (auto builded image from docker-hub)
