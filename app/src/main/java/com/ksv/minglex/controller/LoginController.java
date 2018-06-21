@@ -29,8 +29,12 @@ public class LoginController {
 	}
 
 	@RequestMapping(value="/login", method = RequestMethod.GET)
-	public ModelAndView loginView() {
+	public ModelAndView loginView(HttpServletRequest httpServletRequest) {
 		ModelAndView modelAndView = new ModelAndView();
+		User user = (User) httpServletRequest.getSession().getAttribute("user");
+		if (user != null) {
+			return new ModelAndView("redirect:/profile");
+		}
 		modelAndView.setViewName("login");
 		return modelAndView;
 	}
@@ -91,7 +95,7 @@ public class LoginController {
 			userService.saveUser(user);
 			modelAndView.addObject("successMessage", "User has been registered successfully");
 			modelAndView.addObject("user", new User());
-			modelAndView.setViewName("index");
+			return new ModelAndView("redirect:/login");
 		}
 		return modelAndView;
 	}

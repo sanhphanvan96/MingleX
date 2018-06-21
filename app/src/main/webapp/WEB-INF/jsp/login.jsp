@@ -45,7 +45,9 @@
 							Login
 						</button>
 					</div>
-
+					<span class="login100-form-title" style="text-transform: none;">
+						<a href="/registration">Create a new account?</a>
+					</span>
 				</form>
 			</div>
 		</div>
