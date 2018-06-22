@@ -1,11 +1,11 @@
 package com.ksv.minglex.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ksv.minglex.model.Status;
 import com.ksv.minglex.model.User;
+import com.ksv.minglex.service.StatusService;
 import com.ksv.minglex.service.UserService;
 
 
@@ -22,6 +24,8 @@ public class LoginController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private StatusService statusService;
 
 	@RequestMapping("/")
 	public String index(Model model) {
@@ -120,5 +124,20 @@ public class LoginController {
 		httpServletRequest.getSession().invalidate();
 		return new ModelAndView("redirect:/login");
 	}
-
+	
+	@RequestMapping(value="/explore", method = RequestMethod.GET)
+	public ModelAndView explore	(Model model, HttpServletRequest httpServletRequest) {
+		ModelAndView modelAndView = new ModelAndView();
+		
+		User user = (User) httpServletRequest.getSession().getAttribute("user");
+		if (user == null) {
+			return new ModelAndView("redirect:/login");
+		}
+		List<Status> statuses = statusService.findAll();
+		
+		modelAndView.addObject("curUser", user);
+		modelAndView.addObject("statuses", statuses);
+		modelAndView.setViewName("explore");
+		return modelAndView;
+	}
 }
