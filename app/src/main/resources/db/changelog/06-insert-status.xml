@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet id="insert_status" author="ksv">
+		<insert tableName="status">
+			<column name="user_id" value="1" />
+			<column name="description"
+				value="Passwords are like underwear; you don’t let people see it, you should change it very often, and you shouldn’t share it with strangers – Chris Pirillo" />
+		</insert>
+		<insert tableName="status">
+			<column name="user_id" value="1" />
+			<column name="description"
+				value="Think? Why think! We have computers to do that for us. – Jean Rostand" />
+		</insert>
+		<insert tableName="status">
+			<column name="user_id" value="2" />
+			<column name="description"
+				value="The internet? We are not interested in it. – Bill Gates, 1993" />
+		</insert>
+		<insert tableName="status">
+			<column name="user_id" value="2" />
+			<column name="description"
+				value="The problem of viruses is temporary and will be solved in two years. – John McAfee, 1988 (founder of McAfee Antivirus)" />
+		</insert>
+	</changeSet>
+
+</databaseChangeLog>
