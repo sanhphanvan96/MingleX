@@ -16,7 +16,6 @@ public class Status {
 
 	@Id
 	@Column(name = "status_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	@ManyToOne
@@ -37,14 +36,11 @@ public class Status {
 		super();
 	}
 
-	public Status(int id, User user, @NotEmpty(message = "*Please provide description") String description,
-			String created_at, String updated_at) {
+	public Status(int id, User user, @NotEmpty(message = "*Please provide description") String description) {
 		super();
 		this.id = id;
 		this.user = user;
 		this.description = description;
-		this.created_at = created_at;
-		this.updated_at = updated_at;
 	}
 
 	public int getId() {
