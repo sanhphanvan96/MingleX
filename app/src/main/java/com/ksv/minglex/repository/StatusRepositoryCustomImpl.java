@@ -8,7 +8,6 @@ import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import com.ksv.minglex.model.Status;
-import com.ksv.minglex.model.User;
 
 @Transactional
 public class StatusRepositoryCustomImpl implements StatusRepositoryCustom {
@@ -22,6 +21,17 @@ public class StatusRepositoryCustomImpl implements StatusRepositoryCustom {
 		Query q = em.createNativeQuery("SELECT * from status INNER JOIN user ON status.user_id=user.user_id WHERE user.user_id='" + userId + "'", Status.class);
 		List<Status> statuses = (List<Status>) q.getResultList();
 		return statuses;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Status> findAllOrderByUpdatedAt() {
+
+		Query q = em.createNativeQuery("SELECT * FROM status ORDER BY updated_at DESC", Status.class);
+		List<Status> statuses = (List<Status>) q.getResultList();
+		System.out.println(statuses.toString());
+		return statuses;
+
 	}
 
 }

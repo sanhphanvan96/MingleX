@@ -20,7 +20,7 @@ public class StatusServiceImpl implements StatusService {
 
 	@Override
 	public List<Status> findAll() {
-		return statusRepository.findAll();
+		return statusRepository.findAllOrderByUpdatedAt();
 	}
 
 	@Override
