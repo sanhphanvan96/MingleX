@@ -32,6 +32,7 @@
                 </ul>
                 
                 <ul class="nav navbar-nav navbar-right">
+                <li><a href="/profile">Hello, <strong class="nav-username">${curUser.username}</strong></a></li>
                     <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </ul>
 
@@ -45,7 +46,7 @@
                 modelAttribute="status">
                 <div class="form-group row">
                     <div class="col-md-12 field">
-                        <form:textarea path="description" cols="30" rows="5" placeholder="Hello ${curUser.username}, share your message here..." cssClass="form-control"/>
+                        <form:textarea path="description" cols="30" rows="5" placeholder="Share your message here..." cssClass="form-control"/>
                     </div>
                 </div>
                 <div class="form-group row text-right">
@@ -74,7 +75,7 @@
                         </a>
                     </div>
                     <div class="col-sm-10">
-                        <h3 class="title"><a href="#">${item.user.username}</a></h3>
+                        <h3 class="title"><a href="/profile?id=${item.user.id}">${item.user.username}</a></h3>
                         <p class="text-muted"><span class="glyphicon glyphicon-time"></span> ${item.updated_at}</p>
                         <p>${item.description}</p> 
                     </div>

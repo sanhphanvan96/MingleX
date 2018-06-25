@@ -85,3 +85,11 @@ h4, h5 {
 	width: 777px;
 	margin-top: 20px;
 }
+
+.navbar-right .nav-username {
+	color: lightsteelblue;
+}
+
+.navbar-right a:hover .nav-username, .navbar-right a:focus .nav-username {
+	color: pink;
+}
