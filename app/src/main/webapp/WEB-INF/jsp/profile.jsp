@@ -72,7 +72,7 @@
 
 							<div class="info-item">
 								<h6>Looking for</h6>
-								<p>men</p>
+								<p>${otherUser.lookingfor}</p>
 							</div>
 						</div>
 					</div>
@@ -105,7 +105,7 @@
 
 							<div class="info-item">
 								<h6>Looking for</h6>
-								<p>men</p>
+								<p>${curUser.lookingfor}</p>
 							</div>
 						</div>
 						<a href="#">Change your password</a>

@@ -115,6 +115,12 @@ public class LoginController {
 		
 		List<Status> statuses;
 		String idStr = httpServletRequest.getParameter("id");
+
+		// Redirect to /profile if this is current user
+		if (Integer.toString(user.getId()).equals(idStr)) {
+			return new ModelAndView("redirect:/profile");
+		}
+
 		if (idStr == null || idStr.length() == 0) {
 			statuses = statusService.findByUser(Integer.toString(user.getId()));
 		} else {
