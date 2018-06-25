@@ -123,7 +123,8 @@ public class LoginController {
 			userId.setId(id);
 			statuses = statusService.findByUser(userId);
 		}
-		
+		Status status = new Status();
+		modelAndView.addObject("status", status);
 		modelAndView.addObject("curUser", user);
 		modelAndView.addObject("statuses", statuses);
 		modelAndView.setViewName("profile");
@@ -148,6 +149,8 @@ public class LoginController {
 		}
 		List<Status> statuses = statusService.findAll();
 		
+		Status status = new Status();
+		modelAndView.addObject("status", status);		
 		modelAndView.addObject("curUser", user);
 		modelAndView.addObject("statuses", statuses);
 		modelAndView.setViewName("explore");
