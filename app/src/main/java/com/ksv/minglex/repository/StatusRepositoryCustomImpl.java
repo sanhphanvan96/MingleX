@@ -18,7 +18,7 @@ public class StatusRepositoryCustomImpl implements StatusRepositoryCustom {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Status> findByUserCustom(String userId) { 
-		Query q = em.createNativeQuery("SELECT * from status INNER JOIN user ON status.user_id=user.user_id WHERE user.user_id='" + userId + "'", Status.class);
+		Query q = em.createNativeQuery("SELECT * from status INNER JOIN user ON status.user_id=user.user_id WHERE user.user_id='" + userId + "' ORDER BY updated_at DESC", Status.class);
 		List<Status> statuses = (List<Status>) q.getResultList();
 		return statuses;
 	}
