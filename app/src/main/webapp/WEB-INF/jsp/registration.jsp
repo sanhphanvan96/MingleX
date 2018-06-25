@@ -54,7 +54,25 @@
 								</label>
 								<form:errors path="gender" cssClass="error" />
 							</div>
-							<div class="form-group form-acions text-right">
+							<div class="form-group">
+								<label>Looking for</label><br>
+								<label class="radio-inline">
+									<form:radiobutton path="lookingfor" value="men"/>
+									Men
+								</label>
+								
+								<label class="radio-inline">
+									<form:radiobutton path="lookingfor" value="women"/>
+									Women
+								</label>
+
+								<label class="radio-inline">
+									<form:radiobutton path="lookingfor" value="both" checked="checked"/>
+									Both
+								</label>
+								<form:errors path="lookingfor" cssClass="error" />
+							</div>
+							<div class="form-group form-actions text-right">
 								<input type="reset" class="btn btn-default" value="Reset">
 								<input type="submit" class="btn btn-primary" value="Submit">
 							</div>

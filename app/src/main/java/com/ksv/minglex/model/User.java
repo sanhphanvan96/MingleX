@@ -29,6 +29,8 @@ public class User {
 	@Column(name = "gender")
 	@NotEmpty(message = "*Please provide your gender")
 	private String gender;
+	@Column(name = "lookingfor")
+	private String lookingfor;
 
 	public int getId() {
 		return id;
@@ -60,6 +62,14 @@ public class User {
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	public String getLookingfor() {
+		return lookingfor;
+	}
+
+	public void setLookingfor(String lookingfor) {
+		this.lookingfor = lookingfor;
 	}
 
 }
