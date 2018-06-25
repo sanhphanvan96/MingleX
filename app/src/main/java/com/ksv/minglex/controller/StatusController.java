@@ -24,19 +24,6 @@ public class StatusController {
 	@Autowired
 	private StatusService statusService;
 
-	@RequestMapping(value = "/add-status", method = RequestMethod.GET)
-	public ModelAndView showAddStatusPage(HttpServletRequest httpServletRequest) {
-		ModelAndView modelAndView = new ModelAndView();
-		User user = (User) httpServletRequest.getSession().getAttribute("user");
-		if (user == null) {
-			return new ModelAndView("redirect:/login");
-		}
-		Status status = new Status();
-		modelAndView.addObject("status", status);
-		modelAndView.setViewName("add-status");
-		return modelAndView;
-	}
-
 	@RequestMapping(value = "/add-status", method = RequestMethod.POST)
 	public ModelAndView addStatus(@Valid Status status, BindingResult bindingResult,
 			HttpServletRequest httpServletRequest) {
