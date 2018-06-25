@@ -12,5 +12,5 @@ public interface StatusService {
 	public List<Status> findAll();
 	public Status save(@Valid Status status);
 	public Status findById(int id);
-	public List<Status> findByUser(User user);
+	public List<Status> findByUser(String userId);
 }

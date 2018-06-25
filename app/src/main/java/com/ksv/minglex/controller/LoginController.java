@@ -116,12 +116,9 @@ public class LoginController {
 		List<Status> statuses;
 		String idStr = httpServletRequest.getParameter("id");
 		if (idStr == null || idStr.length() == 0) {
-			statuses = statusService.findByUser(user);
+			statuses = statusService.findByUser(Integer.toString(user.getId()));
 		} else {
-			int id = Integer.parseInt(idStr);
-			User userId = new User();
-			userId.setId(id);
-			statuses = statusService.findByUser(userId);
+			statuses = statusService.findByUser(idStr);
 		}
 		Status status = new Status();
 		modelAndView.addObject("status", status);

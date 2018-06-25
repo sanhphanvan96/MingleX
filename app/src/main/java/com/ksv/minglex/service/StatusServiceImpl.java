@@ -34,8 +34,8 @@ public class StatusServiceImpl implements StatusService {
 	}
 
 	@Override
-	public List<Status> findByUser(User user) {
-		return statusRepository.findByUser(user);
+	public List<Status> findByUser(String userId) {
+		return statusRepository.findByUserCustom(userId);
 	}
 
 }
