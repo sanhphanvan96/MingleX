@@ -112,7 +112,20 @@ public class LoginController {
 		if (user == null) {
 			return new ModelAndView("redirect:/login");
 		}
+		
+		List<Status> statuses;
+		String idStr = httpServletRequest.getParameter("id");
+		if (idStr == null || idStr.length() == 0) {
+			statuses = statusService.findByUser(user);
+		} else {
+			int id = Integer.parseInt(idStr);
+			User userId = new User();
+			userId.setId(id);
+			statuses = statusService.findByUser(userId);
+		}
+		
 		modelAndView.addObject("curUser", user);
+		modelAndView.addObject("statuses", statuses);
 		modelAndView.setViewName("profile");
 		return modelAndView;
 	}
