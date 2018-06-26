@@ -1,10 +1,13 @@
 package com.ksv.minglex.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,28 +15,47 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ksv.minglex.model.Status;
 import com.ksv.minglex.model.User;
+import com.ksv.minglex.service.SessionService;
 import com.ksv.minglex.service.StatusService;
-import com.ksv.minglex.service.UserService;
 
 @Controller
-@RequestMapping(value = "/status")
 public class StatusController {
 
 	@Autowired
-	private UserService userService;
-	@Autowired
 	private StatusService statusService;
+	@Autowired
+	private SessionService sessionService;
 
-	@RequestMapping(value = "/add-status", method = RequestMethod.POST)
-	public ModelAndView addStatus(@Valid Status status, BindingResult bindingResult,
-			HttpServletRequest httpServletRequest) {
+	@RequestMapping(value = "/explore", method = RequestMethod.GET)
+	public ModelAndView explore(Model model, HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView();
-		User user = (User) httpServletRequest.getSession().getAttribute("user");
+
+		User user = sessionService.getCurrentUser(request);
+		if (user == null) {
+			return new ModelAndView("redirect:/login");
+		}
+		List<Status> statuses = statusService.findAll();
+
+		Status status = new Status();
+		modelAndView.addObject("status", status);
+		modelAndView.addObject("curUser", user);
+		modelAndView.addObject("statuses", statuses);
+		modelAndView.setViewName("explore");
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/status/new", method = RequestMethod.POST)
+	public ModelAndView addStatus(@Valid Status status, BindingResult bindingResult, HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView();
+
+		User user = sessionService.getCurrentUser(request);
 		if (user == null) {
 			return new ModelAndView("redirect:/login");
 		}
 		if (bindingResult.hasErrors()) {
-			modelAndView.setViewName("add-status");
+			// TODO: Need redirect to previous page if have any errors (post status from
+			// /explore or /profile).
+			return new ModelAndView("redirect:/explore");
 		} else {
 			status.setUser(user);
 			modelAndView.addObject("successMessage", "Status has been created successfully");
@@ -42,6 +64,5 @@ public class StatusController {
 			statusService.save(status);
 			return new ModelAndView("redirect:/explore");
 		}
-		return modelAndView;
 	}
 }

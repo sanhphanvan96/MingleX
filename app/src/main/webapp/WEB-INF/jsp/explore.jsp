@@ -42,7 +42,7 @@
         <!-- Page Content -->
         <div class="container">
             <!-- Set status -->
-            <form:form action="/status/add-status" method="POST"
+            <form:form action="/status/new" method="POST"
                 modelAttribute="status">
                 <div class="form-group row">
                     <div class="col-md-12 field">

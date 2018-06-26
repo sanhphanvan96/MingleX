@@ -173,7 +173,7 @@
 	<div class="container" style="margin-left: 295px; padding: 25px 50px;">
 		<c:if test="${otherUser == null}">
 			<!-- Set status -->
-			<form:form action="/status/add-status" method="POST"
+			<form:form action="/status/new" method="POST"
 				modelAttribute="status">
 				<div class="form-group row">
 					<div class="col-md-12 field">
