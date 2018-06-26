@@ -13,6 +13,53 @@
 <!-- Custom styles -->
 <link href="css/style.css" rel="stylesheet">
 <link href="css/style_profile.css" rel="stylesheet">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$("#btn_edit1").click(function(){
+			$("#gender").html('<form:form action="/profile" method="POST" id="gender-update" modelAttribute="curUser">\
+									<div class="form-group">\
+										<label class="radio-inline">\
+											<form:radiobutton path="gender" value="male" checked="checked"/>\
+											Male\
+										</label>\
+										<label class="radio-inline">\
+											<form:radiobutton path="gender" value="female"/>\
+											Female\
+										</label>\
+										<label class="radio-inline">\
+											<form:radiobutton path="gender" value="other"/>\
+											Other\
+										</label>\
+										<form:errors path="gender" cssClass="error" />\
+									</div>\
+									<div class="form-group form-actions text-right">\
+										<input type="submit" class="btn btn-primary" value="Done">\
+									</div>\
+								</form:form>');
+
+		});
+
+	});
+	// $('body').delegate('#gender-update','submit',function(e){
+	// 	e.preventDefault();
+    //     var form = $(this);
+    //     var post_url = form.attr('/profile');
+    //     var post_data = form.serialize();
+	// 	console.log(post_data);
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: post_url, 
+    //         data: post_data,
+    //         success: function(msg) {
+    //             $(form).fadeOut(500, function(){
+    //                 form.html(msg).fadeIn();
+    //             });
+    //         }
+    //     });
+// });	
+</script>
 </head>
 
 <body>
@@ -100,12 +147,15 @@
 
 							<div class="info-item">
 								<h6>Gender</h6>
-								<p>${curUser.gender}</p>
+								<p id="gender">${curUser.gender}</p>
+								<a class="edit-info" href="#" id="btn_edit1"><span
+									class="glyphicon glyphicon-edit"></span></a>
 							</div>
 
 							<div class="info-item">
 								<h6>Looking for</h6>
 								<p>${curUser.lookingfor}</p>
+								<a class="edit-info"><span class="glyphicon glyphicon-edit"></span></a>
 							</div>
 						</div>
 						<a href="#">Change your password</a>
@@ -128,8 +178,7 @@
 				<div class="form-group row">
 					<div class="col-md-12 field">
 						<form:textarea path="description" cols="30" rows="5"
-							placeholder="Share your message here..."
-							cssClass="form-control" />
+							placeholder="Share your message here..." cssClass="form-control" />
 					</div>
 				</div>
 				<div class="form-group row text-right">
