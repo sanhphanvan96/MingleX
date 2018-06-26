@@ -124,9 +124,13 @@ public class LoginController {
 		if (idStr == null || idStr.length() == 0) {
 			statuses = statusService.findByUser(Integer.toString(user.getId()));
 		} else {
-			User otherUser = userService.findUserById(idStr);
 			statuses = statusService.findByUser(idStr);
-			modelAndView.addObject("otherUser", otherUser);
+			try {
+				User otherUser = userService.findUserById(idStr);
+				modelAndView.addObject("otherUser", otherUser);
+			} catch(NumberFormatException e) {
+				e.printStackTrace();
+			}
 		}
 		Status status = new Status();
 		modelAndView.addObject("status", status);
