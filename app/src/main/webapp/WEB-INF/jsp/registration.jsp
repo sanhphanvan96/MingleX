@@ -17,78 +17,77 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-t-50 p-b-50">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="panel panel-default panel-login" style="margin-bottom: 0;">
-					<div class="panel-heading">
-						<h3 class="panel-title">Register</h3>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-default panel-login" style="margin-bottom: 0;">
+							<div class="panel-heading">
+								<h3 class="panel-title">Register</h3>
+							</div>
+							<div class="panel-body">
+								<form:form action="/registration" method="POST"
+									modelAttribute="user">
+									<div class="form-group">
+										<label>Username</label>
+										<form:input path="username" cssClass="form-control" />
+										<form:errors path="username" cssClass="error" />
+									</div>
+									<div class="form-group">
+										<label>Password</label>
+										<form:password path="password" cssClass="form-control" />
+										<form:errors path="password" cssClass="error" />
+									</div>
+									<div class="form-group">
+										<label>Gender</label><br>
+										<label class="radio-inline">
+											<form:radiobutton path="gender" value="male" checked="checked"/>
+											Male
+										</label>
+										
+										<label class="radio-inline">
+											<form:radiobutton path="gender" value="female"/>
+											Female
+										</label>
+										
+										<label class="radio-inline">
+											<form:radiobutton path="gender" value="other"/>
+											Other
+										</label>
+										<form:errors path="gender" cssClass="error" />
+									</div>
+									<div class="form-group">
+										<label>Looking for</label><br>
+										<label class="radio-inline">
+											<form:radiobutton path="lookingfor" value="men"/>
+											Men
+										</label>
+										
+										<label class="radio-inline">
+											<form:radiobutton path="lookingfor" value="women"/>
+											Women
+										</label>
+		
+										<label class="radio-inline">
+											<form:radiobutton path="lookingfor" value="both" checked="checked"/>
+											Both
+										</label>
+										<form:errors path="lookingfor" cssClass="error" />
+									</div>
+									<div class="form-group form-actions text-right">
+										<input type="reset" class="btn btn-default" value="Reset">
+										<input type="submit" class="btn btn-primary" value="Submit">
+									</div>
+									<p>
+										Already have an account? <a href="/login">Login here</a>.
+									</p>
+								</form:form>
+							</div>
+						</div>
 					</div>
-					<div class="panel-body">
-						<form:form action="/registration" method="POST"
-							modelAttribute="user">
-							<div class="form-group">
-								<label>Username</label>
-								<form:input path="username" cssClass="form-control" />
-								<form:errors path="username" cssClass="error" />
-							</div>
-							<div class="form-group">
-								<label>Password</label>
-								<form:password path="password" cssClass="form-control" />
-								<form:errors path="password" cssClass="error" />
-							</div>
-							<div class="form-group">
-								<label>Gender</label><br>
-								<label class="radio-inline">
-									<form:radiobutton path="gender" value="male" checked="checked"/>
-									Male
-								</label>
-								
-								<label class="radio-inline">
-									<form:radiobutton path="gender" value="female"/>
-									Female
-								</label>
-								
-								<label class="radio-inline">
-									<form:radiobutton path="gender" value="other"/>
-									Other
-								</label>
-								<form:errors path="gender" cssClass="error" />
-							</div>
-							<div class="form-group">
-								<label>Looking for</label><br>
-								<label class="radio-inline">
-									<form:radiobutton path="lookingfor" value="men"/>
-									Men
-								</label>
-								
-								<label class="radio-inline">
-									<form:radiobutton path="lookingfor" value="women"/>
-									Women
-								</label>
-
-								<label class="radio-inline">
-									<form:radiobutton path="lookingfor" value="both" checked="checked"/>
-									Both
-								</label>
-								<form:errors path="lookingfor" cssClass="error" />
-							</div>
-							<div class="form-group form-actions text-right">
-								<input type="reset" class="btn btn-default" value="Reset">
-								<input type="submit" class="btn btn-primary" value="Submit">
-							</div>
-							<p>
-								Already have an account? <a href="/login">Login here</a>.
-							</p>
-						</form:form>
-					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-			</div>
-		</div>
-		<footer>Copyright &copy; KSV - mgm security partners' interns</footer>
-	</div>
-	
+	<footer>Copyright &copy; KSV - mgm security partners' interns</footer>
 	
 </body>
 </html>
