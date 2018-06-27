@@ -12,7 +12,7 @@
 		relativeToChangelogFile="true" />
 	<include file="changelog/05-create-status-schema.xml"
 		relativeToChangelogFile="true" />
-	<include file="changelog/06-insert-status.xml"
+  	<include file="changelog/06-insert-status.xml"
 		relativeToChangelogFile="true" />
 	<include file="changelog/07-add-column-lookingfor-to-user-schema.xml"
 		relativeToChangelogFile="true" />
