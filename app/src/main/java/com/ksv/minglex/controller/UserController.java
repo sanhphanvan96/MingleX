@@ -1,11 +1,11 @@
 package com.ksv.minglex.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,25 +13,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ksv.minglex.model.Status;
 import com.ksv.minglex.model.User;
+import com.ksv.minglex.service.SessionService;
+import com.ksv.minglex.service.StatusService;
 import com.ksv.minglex.service.UserService;
 
-
 @Controller
-public class LoginController {
+public class UserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private StatusService statusService;
+	@Autowired
+	private SessionService sessionService;
 
-	@RequestMapping("/")
-	public String index(Model model) {
-		return "index";
-	}
-
-	@RequestMapping(value="/login", method = RequestMethod.GET)
-	public ModelAndView loginView(HttpServletRequest httpServletRequest) {
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ModelAndView loginView(HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView();
-		User user = (User) httpServletRequest.getSession().getAttribute("user");
+
+		User user = sessionService.getCurrentUser(request);
 		if (user != null) {
 			return new ModelAndView("redirect:/profile");
 		}
@@ -39,15 +41,15 @@ public class LoginController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value="/login", method = RequestMethod.POST)
-	public ModelAndView login(Model model, HttpServletRequest httpServletRequest) {
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ModelAndView login(Model model, HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView();
 		User curUser = new User();
-		curUser.setUsername(httpServletRequest.getParameter("username"));
-		curUser.setPassword(httpServletRequest.getParameter("password"));
-		curUser.setGender(httpServletRequest.getParameter("gender"));
-		
-		//Validation
+		curUser.setUsername(request.getParameter("username"));
+		curUser.setPassword(request.getParameter("password"));
+		curUser.setGender(request.getParameter("gender"));
+
+		// Validation
 		if (curUser.getUsername() == null || curUser.getUsername().length() == 0) {
 			modelAndView.addObject("errorMessage", "Username is required");
 			modelAndView.setViewName("login");
@@ -58,12 +60,12 @@ public class LoginController {
 			modelAndView.setViewName("login");
 			return modelAndView;
 		}
-		
-		//Authentication
+
+		// Authentication
 		User resUser = userService.authenticateUser(curUser);
 		if (resUser != null) {
 			resUser.setPassword(null);
-			httpServletRequest.getSession().setAttribute("user", resUser);
+			sessionService.setCurrentUser(request, resUser);
 			return new ModelAndView("redirect:/profile");
 		} else {
 			// Has error
@@ -73,7 +75,7 @@ public class LoginController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value="/registration", method = RequestMethod.GET)
+	@RequestMapping(value = "/registration", method = RequestMethod.GET)
 	public ModelAndView registration() {
 		ModelAndView modelAndView = new ModelAndView();
 		User user = new User();
@@ -82,12 +84,13 @@ public class LoginController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value="/registration", method = RequestMethod.POST)
+	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
 		User userExists = userService.findUserByUsername(user.getUsername());
 		if (userExists != null) {
-			bindingResult.rejectValue("username", "error.user", "There is already a user registered with the username provide");
+			bindingResult.rejectValue("username", "error.user",
+					"There is already a user registered with the username provide");
 		}
 		if (bindingResult.hasErrors()) {
 			modelAndView.setViewName("registration");
@@ -100,24 +103,46 @@ public class LoginController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value="/profile", method = RequestMethod.GET)
-	public ModelAndView profileView(Model model, HttpServletRequest httpServletRequest) {
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public ModelAndView profileView(Model model, HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView();
-		
-		User user = (User) httpServletRequest.getSession().getAttribute("user");
+
+		User user = sessionService.getCurrentUser(request);
 		if (user == null) {
 			return new ModelAndView("redirect:/login");
 		}
+
+		List<Status> statuses;
+		String idStr = request.getParameter("id");
+
+		// Redirect to /profile if this is current user
+		if (Integer.toString(user.getId()).equals(idStr)) {
+			return new ModelAndView("redirect:/profile");
+		}
+
+		if (idStr == null || idStr.length() == 0) {
+			statuses = statusService.findByUser(Integer.toString(user.getId()));
+		} else {
+			statuses = statusService.findByUser(idStr);
+			try {
+				User otherUser = userService.findUserById(idStr);
+				modelAndView.addObject("otherUser", otherUser);
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+		}
+		Status status = new Status();
+		modelAndView.addObject("status", status);
 		modelAndView.addObject("curUser", user);
+		modelAndView.addObject("statuses", statuses);
 		modelAndView.setViewName("profile");
 		return modelAndView;
 	}
-	
-	@RequestMapping(value="/logout", method = RequestMethod.GET)
-	public ModelAndView logout(Model model, HttpServletRequest httpServletRequest) {
-		ModelAndView modelAndView = new ModelAndView();
-		
-		httpServletRequest.getSession().invalidate();
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public ModelAndView logout(Model model, HttpServletRequest request) {
+		// TODO: need to remove cookie (client side)
+		sessionService.removeCurrentSession(request);
 		return new ModelAndView("redirect:/login");
 	}
 

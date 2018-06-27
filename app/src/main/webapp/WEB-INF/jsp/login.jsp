@@ -51,6 +51,6 @@
 				</form>
 			</div>
 		</div>
-		<footer>Copyright &copy; KSV - mgm security partners' interns</footer>
 	</div>
+	<footer>Copyright &copy; KSV - mgm security partners' interns</footer>
 </body>
