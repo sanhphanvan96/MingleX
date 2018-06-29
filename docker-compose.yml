@@ -1,22 +1,25 @@
 version: '3'
 services:
   mysql:
-   container_name: minglex-mysql
-   image: mysql/mysql-server:5.7
-   environment:
-    MYSQL_DATABASE: minglexdb
-    MYSQL_ROOT_PASSWORD: 1
-    MYSQL_USER: root
-    MYSQL_ROOT_HOST: '%'
-   ports:
-   - 6868:3306
-   volumes:
-     - ./initDB:/docker-entrypoint-initdb.d
-   restart: always
+    container_name: minglex-mysql
+    image: mysql/mysql-server:5.7
+    environment:
+      MYSQL_DATABASE: minglexdb
+      MYSQL_ROOT_PASSWORD: 1
+      MYSQL_USER: root
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - 6868:3306
+    volumes:
+      - ./initDB:/docker-entrypoint-initdb.d
+    restart: always
   app:
     container_name: minglex-app
     #Todo: change this line later (auto builded image from docker-hub)
     image: sanhphanvan/minglex
+    environment:
+      SEC_STORE_PASSWORD_SOLUTION: Plain  #(Plain/Hash/SaltHash/Bcrypt, default: Plain)
+      SEC_SQL_INJECTION: "False"          #(True/False, default: False), note: must be a string!
     working_dir: /app
     ports:
       - 6969:8080
