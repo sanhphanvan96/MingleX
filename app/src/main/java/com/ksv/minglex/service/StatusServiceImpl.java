@@ -1,7 +1,6 @@
 package com.ksv.minglex.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -11,9 +10,13 @@ import org.springframework.stereotype.Service;
 import com.ksv.minglex.model.Status;
 import com.ksv.minglex.model.User;
 import com.ksv.minglex.repository.StatusRepository;
+import com.ksv.minglex.setting.SecuritySetting;
 
 @Service("statusService")
 public class StatusServiceImpl implements StatusService {
+	
+	@Autowired
+	SecuritySetting securitySetting;
 
 	@Autowired
 	private StatusRepository statusRepository;
@@ -25,7 +28,6 @@ public class StatusServiceImpl implements StatusService {
 
 	@Override
 	public Status save(@Valid Status status) {
-		// TODO Auto-generated method stub
 		return statusRepository.save(status);
 	}
 
@@ -35,7 +37,16 @@ public class StatusServiceImpl implements StatusService {
 
 	@Override
 	public List<Status> findByUser(String userId) {
-		return statusRepository.findByUserCustom(userId);
+		if (!securitySetting.getSqlInjection()) {
+			return statusRepository.findByUserCustom(userId);
+		}
+		User user = new User();
+		try {
+			user.setId(Integer.parseInt(userId));
+		} catch (Exception e) {
+			return null;
+		}
+		return statusRepository.findByUser(user);
 	}
 
 }
