@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.eclipse.jdt.internal.compiler.ast.ReturnStatement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,9 @@ public class StatusServiceImpl implements StatusService {
 
 	@Autowired
 	private StatusRepository statusRepository;
+	
+	@Autowired
+	private XSSPreventionService xssService;
 
 	@Override
 	public List<Status> findAll() {
@@ -28,7 +32,15 @@ public class StatusServiceImpl implements StatusService {
 
 	@Override
 	public Status save(@Valid Status status) {
+//		Store original text security setting for stored XSS prevention is false
+		if (!securitySetting.getStoredXSS())
+			return statusRepository.save(status);
+//		else escape HTML before saving to database
+		xssService = new HTMLEscapeImpl();
+		String content = status.getDescription();
+		status.setDescription(xssService.filter(content));
 		return statusRepository.save(status);
+
 	}
 
 	public Status findById(int id) {
