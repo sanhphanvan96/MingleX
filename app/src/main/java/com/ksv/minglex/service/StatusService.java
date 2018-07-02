@@ -1,9 +1,7 @@
 package com.ksv.minglex.service;
 
 import java.util.List;
-
 import javax.validation.Valid;
-
 import com.ksv.minglex.model.Status;
 
 public interface StatusService {
