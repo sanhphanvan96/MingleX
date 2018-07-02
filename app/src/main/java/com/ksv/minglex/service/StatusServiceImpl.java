@@ -1,31 +1,43 @@
 package com.ksv.minglex.service;
 
 import java.util.List;
-import java.util.Optional;
-
 import javax.validation.Valid;
-
+import org.eclipse.jdt.internal.compiler.ast.ReturnStatement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ksv.minglex.model.Status;
 import com.ksv.minglex.model.User;
 import com.ksv.minglex.repository.StatusRepository;
+import com.ksv.minglex.setting.SecuritySetting;
 
 @Service("statusService")
 public class StatusServiceImpl implements StatusService {
 
 	@Autowired
+	SecuritySetting securitySetting;
+
+	@Autowired
 	private StatusRepository statusRepository;
+
+	@Autowired
+	private XSSPreventionService xssService;
 
 	@Override
 	public List<Status> findAll() {
-		return statusRepository.findAllOrderByUpdatedAt();
+		if (!securitySetting.getStoredXSS())
+			return statusRepository.findAllOrderByUpdatedAt();
+		xssService = new HTMLEscapeImpl();
+		List<Status> statuses = statusRepository.findAllOrderByUpdatedAt();
+		for (Status status : statuses) {
+			status.setDescription(xssService.filter(status.getDescription()));
+			System.out.println(status.getDescription());
+		}
+		return statuses;
 	}
 
 	@Override
 	public Status save(@Valid Status status) {
-		// TODO Auto-generated method stub
 		return statusRepository.save(status);
 	}
 
@@ -35,7 +47,28 @@ public class StatusServiceImpl implements StatusService {
 
 	@Override
 	public List<Status> findByUser(String userId) {
-		return statusRepository.findByUserCustom(userId);
+
+		// Get statuses from database
+		List<Status> statuses;
+		if (!securitySetting.getSqlInjection()) {
+			statuses = statusRepository.findByUserCustom(userId);
+		} else {
+			User user = new User();
+			try {
+				user.setId(Integer.parseInt(userId));
+			} catch (Exception e) {
+				return null;
+			}
+			statuses = statusRepository.findByUser(user);
+		}
+
+		// Filter statuses
+		if (securitySetting.getStoredXSS()) {
+			for (Status status : statuses) {
+				status.setDescription(xssService.filter(status.getDescription()));
+			}
+		}
+		return statuses;
 	}
 
 }

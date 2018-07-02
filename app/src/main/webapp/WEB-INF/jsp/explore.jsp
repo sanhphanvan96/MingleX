@@ -18,6 +18,7 @@
             
             <!-- All user story -->
 			<jsp:include page="/WEB-INF/components/user-stories.jsp" />
+		</div>
 
     </div>
 </t:wrapper>
