@@ -15,32 +15,32 @@ import com.ksv.minglex.setting.SecuritySetting;
 
 @Service("statusService")
 public class StatusServiceImpl implements StatusService {
-	
+
 	@Autowired
 	SecuritySetting securitySetting;
 
 	@Autowired
 	private StatusRepository statusRepository;
-	
+
 	@Autowired
 	private XSSPreventionService xssService;
 
 	@Override
 	public List<Status> findAll() {
-		return statusRepository.findAllOrderByUpdatedAt();
+		if (!securitySetting.getStoredXSS())
+			return statusRepository.findAllOrderByUpdatedAt();
+		xssService = new HTMLEscapeImpl();
+		List<Status> statuses = statusRepository.findAllOrderByUpdatedAt();
+		for (Status status : statuses) {
+			status.setDescription(xssService.filter(status.getDescription()));
+			System.out.println(status.getDescription());
+		}
+		return statuses;
 	}
 
 	@Override
 	public Status save(@Valid Status status) {
-//		Store original text security setting for stored XSS prevention is false
-		if (!securitySetting.getStoredXSS())
-			return statusRepository.save(status);
-//		else escape HTML before saving to database
-		xssService = new HTMLEscapeImpl();
-		String content = status.getDescription();
-		status.setDescription(xssService.filter(content));
 		return statusRepository.save(status);
-
 	}
 
 	public Status findById(int id) {
@@ -49,16 +49,28 @@ public class StatusServiceImpl implements StatusService {
 
 	@Override
 	public List<Status> findByUser(String userId) {
+
+		// Get statuses from database
+		List<Status> statuses;
 		if (!securitySetting.getSqlInjection()) {
-			return statusRepository.findByUserCustom(userId);
+			statuses = statusRepository.findByUserCustom(userId);
+		} else {
+			User user = new User();
+			try {
+				user.setId(Integer.parseInt(userId));
+			} catch (Exception e) {
+				return null;
+			}
+			statuses = statusRepository.findByUser(user);
 		}
-		User user = new User();
-		try {
-			user.setId(Integer.parseInt(userId));
-		} catch (Exception e) {
-			return null;
+
+		// Filter statuses
+		if (securitySetting.getStoredXSS()) {
+			for (Status status : statuses) {
+				status.setDescription(xssService.filter(status.getDescription()));
+			}
 		}
-		return statusRepository.findByUser(user);
+		return statuses;
 	}
 
 }
