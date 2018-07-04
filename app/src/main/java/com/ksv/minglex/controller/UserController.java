@@ -64,7 +64,6 @@ public class UserController {
 		// Authentication
 		User resUser = userService.authenticateUser(curUser);
 		if (resUser != null) {
-			resUser.setPassword(null);
 			// Session fixation
 			sessionService.sessionFixation(request);
 			sessionService.setCurrentUser(request, resUser);

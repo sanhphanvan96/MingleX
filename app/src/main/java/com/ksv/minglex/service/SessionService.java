@@ -27,6 +27,7 @@ public class SessionService {
 	}
 
 	public void setCurrentUser(HttpServletRequest request, User user) {
+		user.setPassword(null);
 		request.getSession().setAttribute("user", user);
 	}
 
