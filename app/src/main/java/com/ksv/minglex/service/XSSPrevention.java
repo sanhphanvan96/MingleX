@@ -2,7 +2,6 @@ package com.ksv.minglex.service;
 
 public class XSSPrevention {
     public static String escapeHtml(String s) {
-		// TODO Auto-generated method stub
 		StringBuilder out = new StringBuilder(Math.max(16, s.length()));
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
@@ -12,6 +11,22 @@ public class XSSPrevention {
 				out.append(';');
 			} else {
 				out.append(c);
+			}
+		}
+		return out.toString();
+	}
+
+	public static String escapeJavaScript(String s) {
+		StringBuilder out = new StringBuilder(Math.max(16, s.length()));
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			//			This encodes all characters except numbers, letters and some characters such as * @ - _ + . /
+			if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '*' || c =='@' || c == '-' || c == '_' || c == '+' || c == '.' || c == '/') {
+				out.append(c);
+			} else {
+				out.append('%');
+				out.append(Integer.toHexString((int) c));
 			}
 		}
 		return out.toString();
