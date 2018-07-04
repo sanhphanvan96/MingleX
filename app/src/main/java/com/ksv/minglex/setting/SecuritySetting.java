@@ -10,6 +10,7 @@ public class SecuritySetting {
     private String storePasswordSolution;
     private String storedXSS;
     private Boolean sessionFixation;
+    private Boolean reflectedXSS;
 
     public Boolean getSqlInjection() {
         return sqlInjection;
@@ -35,12 +36,19 @@ public class SecuritySetting {
         this.storedXSS = storedXSS;
     }
 
-	public Boolean getSessionFixation() {
-		return sessionFixation;
-	}
+    public Boolean getSessionFixation() {
+        return sessionFixation;
+    }
 
-	public void setSessionFixation(Boolean sessionFixation) {
-		this.sessionFixation = sessionFixation;
-	}
+    public void setSessionFixation(Boolean sessionFixation) {
+        this.sessionFixation = sessionFixation;
+    }
 
+    public Boolean getReflectedXSS() {
+        return reflectedXSS;
+    }
+
+    public void setReflectedXSS(Boolean reflectedXSS) {
+        this.reflectedXSS = reflectedXSS;
+    }
 }
