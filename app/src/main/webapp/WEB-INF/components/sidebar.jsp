@@ -1,7 +1,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="cg" uri="/WEB-INF/tld/customTagLibrary" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+
 <div class="w3-sidebar alice-blue w3-bar-block" style="width: auto">
     <c:choose>
         <c:when test="${otherUser != null}">

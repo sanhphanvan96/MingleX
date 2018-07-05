@@ -54,6 +54,7 @@ public class MatchController {
 
         List<User> users = userService.findUsersByKeywordsAndGender(keywords, gender);
 
+        modelAndView.addObject("curUser", user);
         modelAndView.addObject("users", users);
         modelAndView.addObject("keywords", keywords);
         modelAndView.addObject("gender", gender);
