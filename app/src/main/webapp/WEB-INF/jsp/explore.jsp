@@ -9,7 +9,9 @@
     <div class="flex-container" style="padding-top: 53px;">
         
 		<!-- Navbar -->
-		<jsp:include page="/WEB-INF/components/navbar.jsp" />
+		<jsp:include page="/WEB-INF/components/navbar.jsp" >
+			<jsp:param name="active" value="Explore"/>
+		</jsp:include>
 
         <!-- Page Content -->
         <div class="container">
