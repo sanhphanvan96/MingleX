@@ -90,8 +90,10 @@
 
     <c:choose>
         <c:when test="${storedXss == 'Protected'}">
-            $("#gender").html('${cg:escapeJavaScript(gender)}');
-            $("#lookingfor").html('${cg:escapeJavaScript(lookingfor)}');
+            var gender = unescape('${cg:escapeJavaScript(gender)}');
+            var lookingfor = unescape('${cg:escapeJavaScript(lookingfor)}');
+            $("#gender").html(gender);
+            $("#lookingfor").html(lookingfor);
         </c:when>
 
         <c:otherwise>
@@ -99,4 +101,8 @@
             $("#lookingfor").html('${lookingfor}');
         </c:otherwise>
     </c:choose>
+
+    // function unescapeJavaScript(s) {
+    //
+    // }
 </script>
