@@ -47,7 +47,7 @@ public class MatchController {
             keywords = "";
         }
         if (gender == null || gender.length() == 0) {
-            gender = "other";
+            gender = "all";
         }
 
         System.out.println("Searching for: keywords: " + keywords + ", gender: " + gender);

@@ -8,4 +8,5 @@ public interface UserRepositoryCustom {
 	User findByUsernameCustom(String username);
 	User findByUsernameAndPasswordCustom(String username, String password);
 	List<User> findUsersByKeywordsAndGender(String keywords, String gender);
+	List<User> findUsersByKeywords(String keywords);
 }

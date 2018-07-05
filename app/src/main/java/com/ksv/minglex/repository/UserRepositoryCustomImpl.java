@@ -47,5 +47,18 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
         return (users.size() > 0) ? users : null;
     }
 
+    @Override
+    public List<User> findUsersByKeywords(String keywords) {
+        // prepare for LIKE statement
+        keywords = "%" + keywords.trim() + "%";
+
+        Query q = em.createNativeQuery("SELECT * FROM user WHERE username LIKE :username", User.class);
+        q.setParameter("username", keywords);
+
+        List<User> users = (List<User>) q.getResultList();
+
+        return (users.size() > 0) ? users : null;
+    }
+
 
 }

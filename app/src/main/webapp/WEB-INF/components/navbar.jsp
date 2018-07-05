@@ -44,6 +44,7 @@
             <div class="input-group" style="display: flex;">
                 <input type="text" class="form-control" placeholder="Search" name="keywords">
                 <select name="gender" style="width: 120px">
+                    <option value="all" selected> All</option>
                     <option value="other"> Other</option>
                     <option value="male"> Male</option>
                     <option value="female"> Female</option>

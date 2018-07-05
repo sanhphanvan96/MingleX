@@ -14,23 +14,24 @@ import java.util.List;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-	@Autowired
-	private SecuritySetting securitySetting;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private SecuritySetting securitySetting;
 
     @Override
     public User findUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-	@Override
-	public void saveUser(User user) {
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		userRepository.save(user);
-	}
+    @Override
+    public void saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+    }
+
     @Override
     public User authenticateUser(User user) {
         User userdb;
@@ -67,20 +68,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findUsersByKeywordsAndGender(String keywords, String gender) {
+        //  search users for all gender
+        if (gender.equalsIgnoreCase("all")) {
+            return userRepository.findUsersByKeywords(keywords);
+        }
         return userRepository.findUsersByKeywordsAndGender(keywords, gender);
     }
 
-	@Override
-	public User updateUser(User user) {
-		User userDb = userRepository.findById(user.getId());
-		if (userDb == null)
-			return null;
-		String gender = user.getGender();
-		String lookingfor = user.getLookingfor();
-		if (gender != null) userDb.setGender(gender);
-		if (lookingfor != null) userDb.setLookingfor(lookingfor);
-		userRepository.save(userDb);
-		return userDb;
-	}
+    @Override
+    public User updateUser(User user) {
+        User userDb = userRepository.findById(user.getId());
+        if (userDb == null)
+            return null;
+        String gender = user.getGender();
+        String lookingfor = user.getLookingfor();
+        if (gender != null) userDb.setGender(gender);
+        if (lookingfor != null) userDb.setLookingfor(lookingfor);
+        userRepository.save(userDb);
+        return userDb;
+    }
 
 }
