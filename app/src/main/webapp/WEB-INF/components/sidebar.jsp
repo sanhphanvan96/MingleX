@@ -81,6 +81,7 @@
             </div>
         </c:otherwise>
     </c:choose>
+    <input id="csrfInput" type="hidden" name="_csrf" value="${_csrfToken}" />
 </div>
 <script>
     <%--Switch Stored XSS--%>

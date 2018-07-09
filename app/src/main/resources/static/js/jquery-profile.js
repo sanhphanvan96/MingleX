@@ -64,6 +64,9 @@ function updateProfile(type) {
 		url : 'http://localhost:8080/profile',
 		data : JSON.stringify(user),
 		contentType : 'application/json',
+		headers: {
+	        'X-CSRF-Token': $("#csrfInput").val()
+	    },
 		success : function(res) {
 			console.log("success", res);
 			if (user.gender) {
