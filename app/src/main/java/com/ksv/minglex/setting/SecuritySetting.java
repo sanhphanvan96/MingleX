@@ -11,6 +11,7 @@ public class SecuritySetting {
     private String storedXSS;
     private Boolean sessionFixation;
     private Boolean reflectedXSS;
+    private Boolean csrf;
 
     public Boolean getSqlInjection() {
         return sqlInjection;
@@ -51,4 +52,12 @@ public class SecuritySetting {
     public void setReflectedXSS(Boolean reflectedXSS) {
         this.reflectedXSS = reflectedXSS;
     }
+
+	public Boolean getCsrf() {
+		return csrf;
+	}
+
+	public void setCsrf(Boolean csrf) {
+		this.csrf = csrf;
+	}
 }
