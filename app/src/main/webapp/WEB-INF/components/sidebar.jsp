@@ -7,6 +7,7 @@
     <c:choose>
         <c:when test="${otherUser != null}">
             <div class="user-profile">
+                <%--TODO: Change profile picture after done--%>
                 <c:choose>
                     <c:when test="${otherUser.gender == 'male'}">
                         <img src="images/pp-male.jpg" class="rounded-circle profile-img">
