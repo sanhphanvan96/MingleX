@@ -31,6 +31,6 @@ public class LinearCongruentialGenerator implements RandomNumberGenerator {
     public static void main(String[] args) {
         LinearCongruentialGenerator lcg = new LinearCongruentialGenerator();
         for (int i = 0; i < 100; i++)
-            System.out.println(lcg.next(16));
+            System.out.println(lcg.next(8));
     }
 }
