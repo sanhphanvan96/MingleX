@@ -1,9 +1,8 @@
 package com.ksv.minglex.service;
 
 import java.util.List;
-
 import javax.validation.Valid;
-
+import org.eclipse.jdt.internal.compiler.ast.ReturnStatement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +20,12 @@ public class StatusServiceImpl implements StatusService {
 	@Autowired
 	private StatusRepository statusRepository;
 
+	@Autowired
+	private XSSPreventionService xssService;
+
 	@Override
 	public List<Status> findAll() {
-		return statusRepository.findAllOrderByUpdatedAt();
+    return statusRepository.findAllOrderByUpdatedAt();
 	}
 
 	@Override
