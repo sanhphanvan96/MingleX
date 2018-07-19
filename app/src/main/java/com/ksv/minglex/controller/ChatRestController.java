@@ -66,11 +66,12 @@ public class ChatRestController {
 			Chatroom chatroom = new Chatroom();
 			chatroom.setUser1(res.getChatmate());
 			chatroom.setUser2(curUser);
-			chatroomService.save(chatroom);
+			chatroom = chatroomService.save(chatroom);
 
 			// Response connected and key exchange infomation
 			ChatroomResJSONObj resObj = new ChatroomResJSONObj();
 			resObj.setStatus("connected");
+			resObj.setChatroom(chatroom);
 			resObj.setInvite(invite);
 			return new ResponseEntity<ChatroomResJSONObj>(resObj, HttpStatus.OK);
 		}
@@ -98,6 +99,7 @@ public class ChatRestController {
 				// moi nhan OK
 				// return connected and messages
 				resObj.setStatus("connected");
+				resObj.setChatroom(chatroom);
 				resObj.setMessages(messageService.findByChatroom(chatroom));
 
 				return new ResponseEntity<ChatroomResJSONObj>(resObj, HttpStatus.OK);
@@ -109,6 +111,14 @@ public class ChatRestController {
 				resObj.setStatus("accepted");
 				return new ResponseEntity<ChatroomResJSONObj>(resObj, HttpStatus.OK);
 			}
+			if (invite != null && "connected".equals(invite.getStatus())) {
+				// La nguoi gui thu moi, status connected
+				// return connected
+				resObj.setStatus("connected");
+				resObj.setChatroom(chatroom);
+				return new ResponseEntity<ChatroomResJSONObj>(resObj, HttpStatus.OK);
+			}
+
 		} else {
 			invite = inviteService.findInviteBySenderAndRecipient(curUser, chatmate);
 			if (invite != null && "invited".equals(invite.getStatus())) {
@@ -150,6 +160,7 @@ public class ChatRestController {
 			ChatroomResJSONObj resObj = new ChatroomResJSONObj();
 			resObj.setMessages(messageService.findByChatroom(chatroom));
 			resObj.setStatus("connected");
+			resObj.setChatroom(chatroom);
 			resObj.setInvite(invite);
 			return new ResponseEntity<ChatroomResJSONObj>(resObj, HttpStatus.OK);
 		}

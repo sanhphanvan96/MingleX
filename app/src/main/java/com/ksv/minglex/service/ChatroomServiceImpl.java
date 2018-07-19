@@ -31,6 +31,7 @@ public class ChatroomServiceImpl implements ChatroomService {
 	@Override
 	public boolean checkMember(User curUser, Chatroom chatroom) {
 		Chatroom chatroomDB = chatroomRepository.findById(chatroom.getId());
+		if (chatroomDB == null) return false;
 		return (chatroomDB.getUser1().getId() == curUser.getId() || chatroomDB.getUser2().getId() == curUser.getId());
 	}
 
