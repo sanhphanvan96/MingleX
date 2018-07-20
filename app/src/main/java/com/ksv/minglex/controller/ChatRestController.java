@@ -116,6 +116,7 @@ public class ChatRestController {
 				// return connected
 				resObj.setStatus("connected");
 				resObj.setChatroom(chatroom);
+				resObj.setMessages(messageService.findByChatroom(chatroom));
 				return new ResponseEntity<ChatroomResJSONObj>(resObj, HttpStatus.OK);
 			}
 
